@@ -30,6 +30,9 @@ alias oo='cd "/Users/taylorberry/Library/Mobile Documents/iCloud~md~obsidian/Doc
 # Alias to create a new Zettelkasten Fleeting Note
 alias on='nvim "/Users/taylorberry/Library/Mobile Documents/iCloud~md~obsidian/Documents/Personal Vault/Zettelkasten/Fleeting Notes/$(date +%Y%m%d%H%M%S).md"'
 
+alias oq='nvim "/Users/taylorberry/Library/Mobile Documents/iCloud~md~obsidian/Documents/Personal Vault/Quick Notes/$(date +%Y%m%d%H%M%S).md"'
+
+
 # Alias/Function to Open a new Fleeting Note with a Template in Obsidians
 # Function to create and open a new Obsidian Fleeting Note from a template
 function of
@@ -68,6 +71,44 @@ function of
     # Open the new note in Neovim
     nvim "$filename"
 end
+
+# Function to create and open a new Obsidian Fleeting Note from a template
+function ol
+    # Define the directory where new notes will be created
+    set note_dir "$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Personal Vault/Zettelkasten/Literature Notes/"
+
+    # Ensure the directory exists
+    if not test -d "$note_dir"
+        echo "Directory $note_dir does not exist. Please check the path."
+        return 1
+    end
+
+    # Generate a timestamp in the format YYYYMMDDHHMMSS
+    set timestamp (date +%Y%m%d%H%M%S)
+
+    # Define the new filename
+    set filename "$note_dir/$timestamp.md"
+
+    # Define the path to your template file
+    set template_file "$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Personal Vault/Templates/LiteratureNote.md"
+
+    # Check if the template file exists
+    if not test -f "$template_file"
+        echo "Template file $template_file does not exist."
+        return 1
+    end
+
+    # Create the new note from the template
+    cp "$template_file" "$filename"
+
+    # Optionally, replace placeholders in the template with actual values
+    # For example, replace {{title}} and {{date}} with the timestamp
+    sed -i '' "s/{{title}}/$timestamp/g" "$filename"
+    sed -i '' "s/{{date}}/$(date +"%Y-%m-%d %H:%M:%S")/g" "$filename"
+
+    # Open the new note in Neovim
+    nvim "$filename"
+end 
 
 
 ## NVIM ##
