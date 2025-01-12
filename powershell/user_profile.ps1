@@ -87,3 +87,43 @@ Function nvc {
 Set-Alias v nvim
 Set-Alias vi nvim
 Set-Alias vim nvim
+
+### LEETCODE ###
+Function leetcode {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$Url
+    )
+
+    # Define directories
+    $noteDir = "$obsidianPath/leetcode"
+    $scriptsDir = "$HOME/dotfiles/scripts/leetcode"
+
+    # Ensure directories exist
+    if (!(Test-Path $noteDir)) {
+        New-Item -ItemType Directory -Path $noteDir -Force
+    }
+
+    if (!(Test-Path $scriptsDir)) {
+        Write-Host "Scripts directory $scriptsDir does not exist. Please check your dotfiles setup."
+        return
+    }
+
+    # Extract problem name from URL and format it
+    $problemName = $Url -replace '.*problems/([^/]*)/.*', '$1'
+    
+    # Convert kebab-case to Title Case
+    $formattedName = (Get-Culture).TextInfo.ToTitleCase(
+        ($problemName -replace '-', ' ')
+    )
+    
+    # Generate filename
+    $timestamp = Get-Date -Format 'yyyyMMddHHmmss'
+    $filename = "$noteDir\$formattedName.md"
+
+    # Call the JavaScript script
+    node "$scriptsDir/leetcode_scraper.js" $Url $filename
+
+    # Open the new note in Neovim
+    nvim $filename
+}

@@ -131,7 +131,7 @@ function leetcode
     set note_dir "$HOME/Taylor's Vault/leetcode"
 
     # Define scripts directory in dotfiles
-    set scripts_dir "$HOME/dotfiles/fish/scripts"
+    set scripts_dir "$HOME/dotfiles/scripts/leetcode"
 
     # Ensure directories exist
     if not test -d "$note_dir"
