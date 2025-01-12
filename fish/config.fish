@@ -118,3 +118,45 @@ alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
 
+
+## LEETCODE ##
+function leetcode
+    # Check if a URL was provided
+    if test -z "$argv[1]"
+        echo "Please provide a LeetCode URL"
+        return 1
+    end
+
+    # Define the directory for LeetCode notes
+    set note_dir "$HOME/Taylor's Vault/leetcode"
+
+    # Define scripts directory in dotfiles
+    set scripts_dir "$HOME/dotfiles/fish/scripts"
+
+    # Ensure directories exist
+    if not test -d "$note_dir"
+        mkdir -p "$note_dir"
+    end
+
+    if not test -d "$scripts_dir"
+        echo "Scripts directory $scripts_dir does not exist. Please check your dotfiles setup."
+        return 1
+    end
+
+    # Extract problem name from URL and format it
+    # e.g., https://leetcode.com/problems/two-sum/ -> two-sum
+    set problem_name (echo $argv[1] | sed -n 's/.*problems\/\([^/]*\)\/.*/\1/p')
+    
+    # Convert kebab-case to Title Case and add timestamp
+    # e.g., "two-sum" -> "Two Sum - 20240101120000"
+    set formatted_name (echo $problem_name | sed -e 's/-/ /g' -e 's/\b\(.\)/\u\1/g')
+    set timestamp (date +%Y%m%d%H%M%S)
+    set filename "$note_dir/$formatted_name.md"
+
+    # Call the JavaScript script from dotfiles
+    node "$scripts_dir/leetcode_scraper.js" "$argv[1]" "$filename"
+
+    # Open the new note in Neovim
+    nvim "$filename"
+end
+
