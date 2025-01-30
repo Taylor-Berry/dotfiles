@@ -7,6 +7,7 @@ end
 # your path gets massive and fish becomes very slow.
 set -e fish_user_paths
 set -U fish_user_paths $HOME/.bin $HOME/.emacs.d/bin:$PATH  $HOME/.local/bin $HOME/.config/emacs/bin $HOME/Applications /var/lib/flatpak/exports/bin/ $fish_user_paths
+set -gx PATH /usr/local/share/dotnet $PATH
 
 ### EXPORT ###
 set fish_greeting                                 # Supresses fish's intro message

@@ -18,7 +18,6 @@ spec "user.whichkey"
 spec "user.nvimtree"
 spec "user.comment"
 spec "user.lualine"
--- spec "user.extras.copilot"
 spec "user.harpoon"
 spec "user.extras.neoscroll"
 spec "user.illuminate"
@@ -41,9 +40,10 @@ spec "user.extras.colorizer"
 spec "user.extras.dressing"
 spec "user.extras.modicator"
 spec "user.extras.noice"
--- spec "user.extras.codecompanion"
 spec "user.extras.compiler"
 spec "user.obsidian"
+spec "user.debugger" 
+
 -- Uninstalled Plugins
 -- spec "user.extras.lab"
 -- spec "user.neogit"
@@ -52,7 +52,7 @@ spec "user.obsidian"
 -- spec "user.extras.hardtime"
 -- spec "user.alpha"
 -- spec "user.legendary"
-
-
+-- spec "user.extras.copilot"
+-- spec "user.extras.codecompanion"
 -- Leave this at the end of the file
 require ("user.lazy")
